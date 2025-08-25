@@ -9,13 +9,10 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB - Updated for Railway
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/yourdb', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(process.env.MONGODB_URI);
 
 // JWT Secret from environment variable - Updated for Railway
-const JWT_SECRET = process.env.JWT_SECRET || 'your-fallback-secret-key-for-development';
+const JWT_SECRET = process.env.JWT_SECRET || 'development-secret-key';
 
 // User schema
 const User = mongoose.model('User', {
