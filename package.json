@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "ncart-backend",
   "version": "1.0.0",
   "description": "Backend server for Ncart",
   "main": "app.js",
