@@ -9,27 +9,10 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB with proper error handling
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
-  console.error('MONGODB_URI environment variable is not defined');
-  process.exit(1);
-}
-
-mongoose.connect(MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => {
-  console.log('MongoDB connected successfully');
-})
-.catch((err) => {
-  console.error('MongoDB connection error:', err.message);
-  process.exit(1);
-});
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/Ncart');
 
 // JWT Secret (should be in environment variable in production)
-const JWT_SECRET = 'your-secret-key';
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 // User schema
 const User = mongoose.model('User', {
@@ -541,6 +524,7 @@ app.post('/api/seed/blog', async (req, res) => {
 });
 
 // Start server
-app.listen(5000, () => {
-  console.log('Backend running on http://localhost:5000');
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Backend running on port ${PORT}`);
 });
