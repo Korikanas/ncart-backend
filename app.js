@@ -8,8 +8,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Connect to MongoDB with proper error handling
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/Ncart');
+// Connect to MongoDB with better error handling
+mongoose.connect('mongodb://localhost:27017/Ncart', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => {
+  console.log('Connected to MongoDB successfully');
+})
+.catch((err) => {
+  console.error('MongoDB connection error:', err);
+  console.log('Please make sure MongoDB is running on your system');
+});
 
 // JWT Secret (should be in environment variable in production)
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
@@ -67,7 +77,7 @@ const Order = mongoose.model('Order', {
   tracking: Object,
   paymentMethod: String,
   address: String,
-  cancellationReason: { // Add cancellation reason field
+  cancellationReason: {
     reason: String,
     comment: String,
     cancelledAt: Date
@@ -484,47 +494,17 @@ app.delete('/api/admin/blog/:id', authenticateToken, async (req, res) => {
   }
 });
 
-// ========== SEED ROUTES ==========
-// Seed products
-app.post('/api/seed/products', async (req, res) => {
-  try {
-    const products = [
-      // ... (same as before)
-    ];
-    
-    await Product.deleteMany({});
-    await Product.insertMany(products);
-    
-    res.json({ 
-      message: 'Products seeded successfully', 
-      count: products.length
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Seed blog posts
-app.post('/api/seed/blog', async (req, res) => {
-  try {
-    const blogPosts = [
-      // ... (same as before)
-    ];
-
-    await BlogPost.deleteMany({});
-    await BlogPost.insertMany(blogPosts);
-    
-    res.json({ 
-      message: 'Blog posts seeded successfully', 
-      count: blogPosts.length
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'OK', 
+    message: 'Server is running',
+    timestamp: new Date().toISOString()
+  });
 });
 
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Backend running on port ${PORT}`);
+  console.log(`Backend running on http://localhost:${PORT}`);
 });
