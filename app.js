@@ -11,24 +11,25 @@ app.use(express.json());
 // Get MongoDB connection string from environment variables
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/Ncart';
 
-// Debug log to check if environment variable is being read
-console.log('MongoDB URI:', MONGODB_URI ? 'Present' : 'Missing');
-if (MONGODB_URI && MONGODB_URI.includes('localhost')) {
-  console.log('Warning: Using local MongoDB connection - this will not work in production');
-}
+// Debug log to check environment
+console.log('Environment:', process.env.NODE_ENV || 'development');
+console.log('MongoDB URI present:', !!process.env.MONGODB_URI);
 
-// Connect to MongoDB with better error handling
+// Connect to MongoDB with better error handling and options
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  // Remove deprecated options and add recommended ones
 })
 .then(() => {
   console.log('Connected to MongoDB successfully');
+  console.log('Database name:', mongoose.connection.name);
 })
 .catch((err) => {
   console.error('MongoDB connection error:', err);
-  console.log('Please check your MongoDB connection string');
+  console.log('Please check your MongoDB connection string and network access');
 });
+
 // JWT Secret (should be in environment variable in production)
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
@@ -504,9 +505,12 @@ app.delete('/api/admin/blog/:id', authenticateToken, async (req, res) => {
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
+  const dbStatus = mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected';
+  
   res.json({ 
     status: 'OK', 
     message: 'Server is running',
+    database: dbStatus,
     timestamp: new Date().toISOString()
   });
 });
