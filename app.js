@@ -8,6 +8,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get('/test', (req, res) => {
+  res.json({ 
+    message: 'Server is responding!',
+    timestamp: new Date().toISOString(),
+    port: process.env.PORT,
+    nodeEnv: process.env.NODE_ENV || 'development'
+  });
+});
+
 // Get MongoDB connection string from environment variables
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/Ncart';
 
