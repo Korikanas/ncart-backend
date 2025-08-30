@@ -11,6 +11,12 @@ app.use(express.json());
 // Get MongoDB connection string from environment variables
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/Ncart';
 
+// Debug log to check if environment variable is being read
+console.log('MongoDB URI:', MONGODB_URI ? 'Present' : 'Missing');
+if (MONGODB_URI && MONGODB_URI.includes('localhost')) {
+  console.log('Warning: Using local MongoDB connection - this will not work in production');
+}
+
 // Connect to MongoDB with better error handling
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
@@ -23,7 +29,6 @@ mongoose.connect(MONGODB_URI, {
   console.error('MongoDB connection error:', err);
   console.log('Please check your MongoDB connection string');
 });
-
 // JWT Secret (should be in environment variable in production)
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
