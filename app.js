@@ -8,8 +8,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Get MongoDB connection string from environment variables
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/Ncart';
+
 // Connect to MongoDB with better error handling
-mongoose.connect('mongodb://localhost:27017/Ncart', {
+mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -18,7 +21,7 @@ mongoose.connect('mongodb://localhost:27017/Ncart', {
 })
 .catch((err) => {
   console.error('MongoDB connection error:', err);
-  console.log('Please make sure MongoDB is running on your system');
+  console.log('Please check your MongoDB connection string');
 });
 
 // JWT Secret (should be in environment variable in production)
