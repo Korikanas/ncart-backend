@@ -6,7 +6,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: ['https://ncart-frontend.onrender.com', 'http://localhost:3000'],
+  credentials: true
+}));
 app.use(express.json());
 
 // Connect to MongoDB (Railway or local)
