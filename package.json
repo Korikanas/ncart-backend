@@ -2,10 +2,10 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "Backend server for Ncart",
-  "main": "src/app.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "nodemon src/app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
@@ -19,3 +19,4 @@
   "author": "",
   "license": "ISC"
 }
+
