@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 
 const app = express();
 app.use(cors({
-  origin: ['https://ncart-frontend.onrender.com', 'http://localhost:3000'],
+  origin: ['https://ncart.onrender.com', 'http://localhost:3000'],
   credentials: true
 }));
 app.use(express.json());
