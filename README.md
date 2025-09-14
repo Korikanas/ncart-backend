@@ -1,7 +1,7 @@
 
-# Neart Backend
+# Ncart Backend
 
-RESTful API backend for the Neart e-commerce platform, built with Node.js, Express.js, and MongoDB.
+RESTful API backend for the Ncart e-commerce platform, built with Node.js, Express.js, and MongoDB.
 
 ## Features
 
