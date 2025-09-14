@@ -1,6 +1,4 @@
 
-
-```markdown
 # Neart Backend
 
 RESTful API backend for the Neart e-commerce platform, built with Node.js, Express.js, and MongoDB.
