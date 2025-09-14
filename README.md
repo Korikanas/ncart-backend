@@ -1,5 +1,4 @@
 
-## Backend README.md
 
 ```markdown
 # Neart Backend
