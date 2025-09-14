@@ -19,7 +19,7 @@ RESTful API backend for the Ncart e-commerce platform, built with Node.js, Expre
 - **Database**: MongoDB (hosted on Railway)
 - **Authentication**: JWT
 - **File Storage**: Cloudinary
-- **Deployment**: Railway
+- **Deployment**: Render
 
 ## Getting Started
 
